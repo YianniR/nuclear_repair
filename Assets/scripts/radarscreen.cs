@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class radarscreen : MonoBehaviour
 {
-    Vector3 movement;                   // The vector to store the direction of the player's movement.
+    Vector3 force;                   // The vector to store the direction of the player's movement.
+    public Rigidbody _light;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _light = GameObject.Find("light").GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float z = Input.GetAxisRaw("Horizontal");
         float x = Input.GetAxisRaw("Vertical");
 
-        // Set the movement vector based on the axis input.
-        movement.Set(x/10, 0f, z/10);
-        // Move the player to it's current position plus the movement.
-        this.transform.Find("light").transform.Translate(movement);
+        force.Set(-x, 0f, z);
+        _light.AddForce(force);
+
     }
 }
