@@ -50,7 +50,7 @@ public class keyswapper : MonoBehaviour
         key2 = randomchar();
         swp.swapkeys(key1, key2);
 
-        txt.GetComponent<TextMesh>().text = key1.ToString().ToUpper() + "=" + key2.ToString().ToUpper();
+        txt.GetComponent<TextMesh>().text = key1.ToString().ToUpper() + "⇄" + key2.ToString().ToUpper();
 
     }
 }

@@ -22,7 +22,7 @@ public class turbinewidget : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         this.transform.Find("turbine").Rotate(new Vector3(0, 1, 0), smooth_rotspeed);
         this.transform.Find("Text/tex").GetComponent<TextMesh>().text = to_enter;
