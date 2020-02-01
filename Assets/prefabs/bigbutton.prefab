@@ -340,7 +340,7 @@ MonoBehaviour:
   mintime: 2
   maxtime: 10
   reactor: {fileID: 0}
-  impactWeight: 0
+  impactWeight: 0.01
 --- !u!136 &6791002922871530248
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -473,7 +473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2500251443459741453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.11, z: 0}
+  m_LocalPosition: {x: 0, y: 1.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7059014063178893831}
@@ -490,8 +490,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.9811321, g: 0, b: 0, a: 1}
-  m_Intensity: 9
-  m_Range: 7
+  m_Intensity: 6
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 658217184801004267}
   - component: {fileID: 4312050612770466080}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

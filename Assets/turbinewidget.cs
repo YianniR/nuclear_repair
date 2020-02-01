@@ -19,24 +19,33 @@ public class turbinewidget : MonoBehaviour
     public GameObject reactor;
     public float impactWeight = 0.01f;
 
+    GameObject turbine;
+    TextMesh codetext;
+    Light light;
+    keyinputmanager inpmanager;
+
     // Start is called before the first frame update
     void Start()
     {
         reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(mintime, maxtime);
+        turbine = this.transform.Find("turbine").gameObject;
+        codetext = this.transform.Find("Text/tex").GetComponent<TextMesh>();
+        light = this.transform.Find("light/LedLight").GetComponent<Light>();
+        inpmanager = GameObject.Find("KeyInputManager").GetComponent<keyinputmanager>();
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.transform.Find("turbine").Rotate(new Vector3(0, 1, 0), smooth_rotspeed);
-        this.transform.Find("Text/tex").GetComponent<TextMesh>().text = to_enter;
+        turbine.transform.Rotate(new Vector3(0, 1, 0), smooth_rotspeed);
+        codetext.text = to_enter;
 
         now = Time.time;
         breaktime = nextbreak;
         if (isrunning)
         {
-            Light light = this.transform.Find("light/LedLight").GetComponent<Light>();
             light.enabled = false;
             to_enter = "";
             smooth_rotspeed += smooth_up;
@@ -53,7 +62,6 @@ public class turbinewidget : MonoBehaviour
         }
         else //not running
         {
-            Light light = this.transform.Find("light/LedLight").GetComponent<Light>();
             light.enabled = true;
             reactor.GetComponent<Reactor>().health -= impactWeight;
             smooth_rotspeed -= smooth_down;
@@ -63,9 +71,14 @@ public class turbinewidget : MonoBehaviour
             }
             if (to_enter.Length > 0)
             {
-                if (Input.GetKeyDown(to_enter[0].ToString().ToLower()))
+                char realkey = inpmanager.MapKey(to_enter.ToLower()[0]);
+
+                if (inpmanager.KeyEn(to_enter.ToLower()[0]))
                 {
-                    to_enter = to_enter.Substring(1);
+                    if (Input.GetKeyDown(realkey.ToString()))
+                    {
+                        to_enter = to_enter.Substring(1);
+                    }
                 }
             }
             else
