@@ -1,0 +1,14 @@
+request:
+{
+    "instanceId": 0,
+    "type": "button",
+    "data": { "numberOfClicks": 5 }
+}
+
+
+
+resultant object:
+{
+    "instanceId": 0,
+    "numberOfClicks": 5
+}

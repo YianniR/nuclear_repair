@@ -2,40 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class button : MonoBehaviour {
+
+public class button : Widget {
     private Reactor reactor;
 
-    public int temperatureReduction = 1;
+    public uint temperatureReduction = 1;
+    public float depth = 0.1f;
+
+    Transform cylinder;
 
     // Start is called before the first frame update
     void Start () {
         reactor = GameObject.FindGameObjectsWithTag("Reactor")[0].GetComponent<Reactor>();
+        cylinder = transform.Find("Cylinder");
     }
 
     // Update is called once per frame
     void Update () { }
 
-    [System.Serializable]
-    public class data {
-        public int numberOfClicks;
-    }
-
-    public void init (Vector3 pos, int id) {
-
-    }
-
-    public void send<T> (T t) {
-        /* if (!T.IsSerializable) return; */
-
-        string json = JsonUtility.ToJson (t);
-    }
 
     public void OnMouseDown () {
         Debug.Log("OnMouseDown");
-        reactor.temperature -= temperatureReduction;
+        cylinder.Translate(Vector3.down * depth);
     }
 
     public void OnMouseUp () {
         Debug.Log("OnMouseUp");
+        cylinder.Translate(Vector3.up * depth);
+        reactor.cool(temperatureReduction);
     }
 }
