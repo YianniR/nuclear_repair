@@ -13,7 +13,7 @@ public class radarscreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _light = transform.Find("radarlight").gameObject;
+        _light = transform.Find("screen/radarlight").gameObject;
         nextbreak = Time.time + Random.Range(5, 10);
 
     }
@@ -30,7 +30,7 @@ public class radarscreen : MonoBehaviour
         if (Time.time > nextbreak)
         {
 
-            randomvelocity.Set(Random.Range(-0.01f, 0.01f), 0f, Random.Range(-0.01f, 0.01f));
+            randomvelocity.Set(Random.Range(-0.03f, 0.03f), 0f, Random.Range(-0.03f, 0.03f));
 
             nextbreak = Time.time + Random.Range(5, 10);
         }
@@ -40,5 +40,14 @@ public class radarscreen : MonoBehaviour
         Vector3 pos = new Vector3(_light.transform.localPosition.x, 0f, _light.transform.localPosition.z);
         pos = Vector3.ClampMagnitude(pos, maxRadius);
         _light.transform.localPosition = new Vector3(pos.x, _light.transform.localPosition.y, pos.z);
+
+        if(pos.magnitude > maxRadius * 3f/4f)
+        {
+            _light.GetComponent<Light>().color = Color.red;
+        }
+        else
+        {
+            _light.GetComponent<Light>().color = Color.green;
+        }
     }
 }
