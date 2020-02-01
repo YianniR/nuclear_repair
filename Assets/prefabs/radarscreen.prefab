@@ -396,6 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3889803721279031455}
+  - component: {fileID: 7741235729953876714}
   m_Layer: 0
   m_Name: radarscreen
   m_TagString: Untagged
@@ -424,6 +425,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7741235729953876714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660735569608757226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a9520dbc5940a41b22e1a3366e6605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 6848184547970271220}
+  maxRadius: 1.5
 --- !u!1 &5670922957812181633
 GameObject:
   m_ObjectHideFlags: 0
