@@ -10,7 +10,7 @@ public class radarscreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _light = GameObject.Find("light").GetComponent<Rigidbody>();
+        _light = transform.Find("radarlight").gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
