@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _light: {fileID: 6848184547970271220}
-  maxRadius: 5
+  maxRadius: 8
 --- !u!1 &5670922957812181633
 GameObject:
   m_ObjectHideFlags: 0
