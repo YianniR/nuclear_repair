@@ -19,6 +19,14 @@ public class Reactor : MonoBehaviour {
         Debug.Log(health);
         health = Mathf.Clamp(health, 0, 100f);
         this.transform.Find("health/Meter").localScale = new Vector3(1, 1, health/100f);
+        if (health<=66f && health>=33f)
+        {
+            this.transform.Find("health/Meter/bar").GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+        }
+        if (health < 33f)
+        {
+            this.transform.Find("health/Meter/bar").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        }
     }
 
     public void lose () {
