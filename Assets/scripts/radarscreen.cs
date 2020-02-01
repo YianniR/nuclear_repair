@@ -10,12 +10,15 @@ public class radarscreen : MonoBehaviour
     float nextbreak = 0;
     public float maxRadius;
 
+    public GameObject reactor;
+    public float impactWeight = 0.01f;
+
     // Start is called before the first frame update
     void Start()
     {
         _light = transform.Find("screen/radarlight").gameObject;
+        reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(5, 10);
-
     }
 
     // Update is called once per frame
@@ -44,6 +47,7 @@ public class radarscreen : MonoBehaviour
         if(pos.magnitude > maxRadius * 3f/4f)
         {
             _light.GetComponent<Light>().color = Color.red;
+            reactor.GetComponent<Reactor>().health -= impactWeight;
         }
         else
         {

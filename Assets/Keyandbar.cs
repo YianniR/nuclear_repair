@@ -8,6 +8,10 @@ public class Keyandbar : MonoBehaviour
     string mychar;
     public float barlevel = 1;
     keyinputmanager inpmanager;
+
+    public GameObject reactor;
+    public float impactWeight=0.01f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +19,7 @@ public class Keyandbar : MonoBehaviour
         mychar = Alphabet[Random.Range(0, 25)];
         ((TextMesh)this.transform.Find("Text").GetComponent<TextMesh>()).text = mychar;
         inpmanager = GameObject.Find("KeyInputManager").GetComponent<keyinputmanager>();
+        reactor = GameObject.FindWithTag("Reactor");
     }
 
     // Update is called once per frame
@@ -57,6 +62,7 @@ public class Keyandbar : MonoBehaviour
         if (barlevel <= 0)
         {
             barlevel = 0;
+            reactor.GetComponent<Reactor>().health -= impactWeight;
         }
     }
 

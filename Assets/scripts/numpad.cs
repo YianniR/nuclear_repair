@@ -29,6 +29,9 @@ public class numpad : MonoBehaviour
     TextMeshPro textmesh;
     Light light;
 
+    public GameObject reactor;
+    public float impactWeight = 0.01f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,8 @@ public class numpad : MonoBehaviour
         _9 = GameObject.Find("9").GetComponent<small_button>();
         textmesh = GameObject.Find("screen/text").GetComponent<TextMeshPro>();
         light = this.transform.Find("light/LedLight").GetComponent<Light>();
+        reactor = GameObject.FindWithTag("Reactor");
+
     }
 
     // Update is called once per frame
@@ -69,7 +74,8 @@ public class numpad : MonoBehaviour
         else //not running
         {
             light.enabled = true;
-          
+            reactor.GetComponent<Reactor>().health -= impactWeight;
+
             if (_0.pressed) { entered += "0"; }
             if (_1.pressed) { entered += "1"; }
             if (_2.pressed) { entered += "2"; }

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Reactor : MonoBehaviour {
-    public float health = 10000f;
+    public float health = 100f;
+
 
     private float untilNextTemperatureIncrease;
 
@@ -15,9 +17,12 @@ public class Reactor : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         Debug.Log(health);
-       
+        health = Mathf.Clamp(health, 0, 100f);
+        this.transform.Find("health/Meter").localScale = new Vector3(1, 1, health/100f);
+    }
 
-        float scaledlevel = 0.1f + 0.9f * health;
-        this.transform.Find("health/bar").localScale = new Vector3(1, scaledlevel, 1);
+    public void lose () {
+        Debug.Log("You LOSE!");
+        // TODO Load the 'you lost' scene.
     }
 }

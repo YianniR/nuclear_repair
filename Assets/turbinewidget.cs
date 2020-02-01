@@ -15,9 +15,14 @@ public class turbinewidget : MonoBehaviour
     public float breaktime;
     public float mintime = 2;
     public float maxtime = 10;
+
+    public GameObject reactor;
+    public float impactWeight = 0.01f;
+
     // Start is called before the first frame update
     void Start()
     {
+        reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(mintime, maxtime);
     }
 
@@ -50,6 +55,7 @@ public class turbinewidget : MonoBehaviour
         {
             Light light = this.transform.Find("light/LedLight").GetComponent<Light>();
             light.enabled = true;
+            reactor.GetComponent<Reactor>().health -= impactWeight;
             smooth_rotspeed -= smooth_down;
             if (smooth_rotspeed < 0)
             {
