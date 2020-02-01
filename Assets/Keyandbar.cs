@@ -12,6 +12,8 @@ public class Keyandbar : MonoBehaviour
     public GameObject reactor;
     public float impactWeight=0.01f;
 
+    GameObject meter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class Keyandbar : MonoBehaviour
         ((TextMesh)this.transform.Find("Text").GetComponent<TextMesh>()).text = mychar;
         inpmanager = GameObject.Find("KeyInputManager").GetComponent<keyinputmanager>();
         reactor = GameObject.FindWithTag("Reactor");
+        meter = this.transform.Find("Meter").gameObject;
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class Keyandbar : MonoBehaviour
             bardown();
         }
         float scaledlevel = 0.1f + 0.9f * barlevel;
-        this.transform.Find("Meter").localScale = new Vector3(1, scaledlevel, 1);
+        meter.transform.localScale = new Vector3(1, scaledlevel, 1);
     }
 
 

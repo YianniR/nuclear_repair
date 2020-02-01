@@ -9,10 +9,14 @@ public class keyswapper : MonoBehaviour
     bool haveirun = false;
     float next_swap;
     GameObject txt;
+
+    keyinputmanager swp;
+
     // Start is called before the first frame update
     void Start()
     {
         txt = this.transform.Find("Text/tex").gameObject;
+        swp = (keyinputmanager)GameObject.Find("/KeyInputManager").GetComponent<keyinputmanager>();
         swapkeys();
         next_swap = Time.time + Random.Range(5f, 25f);
     }
@@ -36,7 +40,6 @@ public class keyswapper : MonoBehaviour
 
     void swapkeys()
     {
-        keyinputmanager swp = (keyinputmanager)GameObject.Find("/KeyInputManager").GetComponent<keyinputmanager>();
 
         if (haveirun){
             swp.swapkeys(key1, key2);

@@ -135,7 +135,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2655681571717657010}
   - component: {fileID: 2655681571717657011}
-  - component: {fileID: 6848184547970271220}
   m_Layer: 0
   m_Name: radarlight
   m_TagString: Untagged
@@ -217,22 +216,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!54 &6848184547970271220
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2655681571717657013}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &2655681571745248920
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,8 +452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a9520dbc5940a41b22e1a3366e6605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 6848184547970271220}
-  maxRadius: 8
+  _light: {fileID: 6848184547970271220, guid: e45db7b1525722b4895bdc8cbb9897a7, type: 3}
+  maxRadius: 1.25
+  reactor: {fileID: 0}
+  impactWeight: 0.01
 --- !u!1 &5670922957812181633
 GameObject:
   m_ObjectHideFlags: 0
