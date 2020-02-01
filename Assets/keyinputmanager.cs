@@ -5,7 +5,7 @@ using UnityEngine;
 public class keyinputmanager : MonoBehaviour
 {
     Dictionary<char, char> map = new Dictionary<char, char>();
-    Dictionary<char, bool> en = new Dictionary<char, bool>();
+    Dictionary<char, int> en = new Dictionary<char, int>();
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +31,15 @@ public class keyinputmanager : MonoBehaviour
     {
         if (!en.ContainsKey(c))
         {
-            en.Add(c, true);
+            en.Add(c, 0);
         }
-        return en[c];
+        if (en[c] == 0){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void swapkeys(char a, char b)
@@ -56,11 +62,19 @@ public class keyinputmanager : MonoBehaviour
     {
         if (!en.ContainsKey(c))
         {
-            en.Add(c, e);
+            if (e)
+            {
+                en.Add(c, 0);
+            }
+            else
+            {
+                en.Add(c, 1);
+            }
         }
         else
         {
-            en[c] = e;
+            if (e) { en[c] -= 1; }
+            else { en[c] += 1; }
         }
     }
 
