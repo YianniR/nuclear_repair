@@ -19,10 +19,13 @@ public class button : Widget {
     public GameObject reactor;
     public float impactWeight = 0.01f;
 
+    Light light;
+
     // Start is called before the first frame update
     void Start () {
         reactor = GameObject.FindWithTag("Reactor");
-        cylinder = transform.Find("Cylinder");
+        cylinder = this.transform.Find("Cylinder");
+        light = this.transform.Find("light/LedLight").GetComponent<Light>();
     }
 
     // Update is called once per frame
@@ -30,7 +33,6 @@ public class button : Widget {
         now = Time.time;
         if (isrunning)
         {
-            Light light = this.transform.Find("light/LedLight").GetComponent<Light>();
             light.enabled = false;
 
             if (Time.time > nextbreak)
@@ -40,7 +42,6 @@ public class button : Widget {
         }
         else //not running
         {
-            Light light = this.transform.Find("light/LedLight").GetComponent<Light>();
             light.enabled = true;
             float hp = reactor.GetComponent<Reactor>().health;
             reactor.GetComponent<Reactor>().health = hp - impactWeight;
