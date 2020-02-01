@@ -966,6 +966,11 @@ PrefabInstance:
       propertyPath: health
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2345077560239681488, guid: 20e169ae56dc36c4080d07f58a24cbed,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20e169ae56dc36c4080d07f58a24cbed, type: 3}
 --- !u!1 &1820026635 stripped
