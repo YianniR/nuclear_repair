@@ -27,10 +27,12 @@ public class numpad : MonoBehaviour
     small_button _8;
     small_button _9;
     TextMeshPro textmesh;
+    Light light;
 
     // Start is called before the first frame update
     void Start()
     {
+
         nextbreak = Time.time + Random.Range(mintime, maxtime);
         _0 = GameObject.Find("0").GetComponent<small_button>();
         _1 = GameObject.Find("1").GetComponent<small_button>();
@@ -43,6 +45,7 @@ public class numpad : MonoBehaviour
         _8 = GameObject.Find("8").GetComponent<small_button>();
         _9 = GameObject.Find("9").GetComponent<small_button>();
         textmesh = GameObject.Find("screen/text").GetComponent<TextMeshPro>();
+        light = this.transform.Find("light/LedLight").GetComponent<Light>();
     }
 
     // Update is called once per frame
@@ -55,8 +58,8 @@ public class numpad : MonoBehaviour
 
         if (isrunning)
         {
-            //Light light = this.transform.Find("screen/light").GetComponent<Light>();
-            //light.enabled = false;
+            
+            light.enabled = false;
 
             if (Time.time > nextbreak)
             {
@@ -65,8 +68,7 @@ public class numpad : MonoBehaviour
         }
         else //not running
         {
-            //Light light = this.transform.Find("screen/light").GetComponent<Light>();
-            //light.enabled = true;
+            light.enabled = true;
           
             if (_0.pressed) { entered += "0"; }
             if (_1.pressed) { entered += "1"; }
