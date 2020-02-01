@@ -26,23 +26,38 @@ public class Keyandbar : MonoBehaviour
         {
             if (Input.GetKeyDown(realkey.ToString()))
             {
-                barlevel += upspeed;
-                if (barlevel >= 1)
-                {
-                    barlevel = 1;
-                }
+                barup();
             }
             else
             {
-                barlevel -= downspeed;
-                if (barlevel <= 0)
-                {
-                    barlevel = 0;
-                }
+                bardown();
             }
+        }
+        else
+        {
+            bardown();
         }
         float scaledlevel = 0.1f + 0.9f * barlevel;
         this.transform.Find("Meter").localScale = new Vector3(1, scaledlevel, 1);
+    }
+
+
+    void barup()
+    {
+        barlevel += upspeed;
+        if (barlevel >= 1)
+        {
+            barlevel = 1;
+        }
+    }
+    
+    void bardown()
+    {
+        barlevel -= downspeed;
+        if (barlevel <= 0)
+        {
+            barlevel = 0;
+        }
     }
 
 
