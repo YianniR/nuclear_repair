@@ -9,7 +9,6 @@ public class Spawner : MonoBehaviour {
     public string dataUrl = "localhost";
 
     public string widgetsPath = "widgets.json";
-    public string dataPath = "data.json";
 
     public float secondsPerWidgetDBPoll = 5;
 
@@ -26,7 +25,7 @@ public class Spawner : MonoBehaviour {
     }
     public List<lol> lols;
 
-    private List<int> instances;
+    private List<int> instances = new List<int>();
 
 
     ///// SPIRALS
@@ -36,20 +35,11 @@ public class Spawner : MonoBehaviour {
     private uint completedSidesAtCurrentLength;
     private Direction currentDirection;
     private Vector2 previousPos;
-    ///// SPIRALS
+    ///// SLARIPS
 
-
-    // TODO:
-    // * [x] read from json (file for now).
-    // * [x] store the instantiable widgets.
-    // * [x] query the instantiable widgets from the received json.
-    // * [x] instantiate a widget from the json params.
-    // * [ ] manage the grid of current widgets, so that new ones don't get put
-    //       over existing ones.
 
     void Start () {
         untilNextDBPoll = secondsPerWidgetDBPoll;
-        instances = new List<int>();
 
         ///// SPIRALS
         currentSideLength = 0;
@@ -57,22 +47,24 @@ public class Spawner : MonoBehaviour {
         completedSidesAtCurrentLength = 0;
         currentDirection = Direction.UP;
         previousPos = new Vector2(0, 0);
-        ///// SPIRALS
+        ///// SLARIPS
     }
 
     void Update () {
         // Poll for new widgets.
         untilNextDBPoll -= Time.deltaTime;
-        if (untilNextDBPoll <= 0) {
+        if (untilNextDBPoll <= 0.0f) {
             getWidgets();
             untilNextDBPoll = secondsPerWidgetDBPoll;
         }
     }
 
+    public int numWidgets () {
+        return instances.Count;
+    }
+
     // Read in new json widget(s) and instantiate where necessary.
     public void getWidgets () {
-        /* UnityWebRequest www = UnityWebRequest.Get(widgetUrl); */
-        /* Debug.Log("got '" + www.downloadHandler.text + "' from the DB"); */
         string filePath = widgetsPath.Replace(".json", "");
         string jsonText = Resources.Load<TextAsset>(filePath).text;
 

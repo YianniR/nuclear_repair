@@ -8,9 +8,14 @@ public class widgetcamzoom : MonoBehaviour
     Camera cam;
     public Vector3 tgtpos;
     public float tgtsize;
+
+    Spawner spawner;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
+
         cam = this.transform.GetComponent<Camera>();
         updatetgts();
         this.transform.position = tgtpos;
@@ -32,14 +37,14 @@ public class widgetcamzoom : MonoBehaviour
 
     int getnumwig()
     {
-        return num_wig;
+        return spawner.numWidgets();
     }
 
     void updatetgts()
     {
         int oldwig = num_wig;
         num_wig = getnumwig();
-        if (true)//(num_wig > oldwig)
+        if (num_wig > oldwig)
         {
             int l = 1;
             while (l * l < num_wig)

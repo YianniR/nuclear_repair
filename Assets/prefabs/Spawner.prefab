@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2378320876031480061}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   widgetsPath: widgets.json
   dataPath: data.json
   secondsPerWidgetDBPoll: 5
+  widgetSize: 6
   lols:
   - name: '"button"'
     widget: {fileID: 1972068869815277511, guid: fc31a7f6afe1475419cfd23939a9d1f1,
