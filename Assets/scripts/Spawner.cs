@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 
 public class Spawner : MonoBehaviour {
     public int pcId;
-
-    public string widgetsPath = "widgets.json";
 
     public float secondsPerWidgetDBPoll = 5;
 
@@ -64,9 +61,6 @@ public class Spawner : MonoBehaviour {
 
     // Read in new json widget(s) and instantiate where necessary.
     public void getWidgets () {
-        string filePath = widgetsPath.Replace(".json", "");
-        string jsonText = Resources.Load<TextAsset>(filePath).text;
-
         StartCoroutine(Mongo.GetWidgets((JSONObject data) => {
             foreach (JSONObject json in data["_items"].list) {
                 // Get info about the (potential) new widget.
@@ -77,13 +71,10 @@ public class Spawner : MonoBehaviour {
                 foreach (JSONObject j in json["dataIds"].list) { dataIds.Add((int)j.n); }
 
                 // If the widget is of a known type, and not with an already used instance ID, then spawn it.
-                if (instances.Contains(instanceId)) {
-                    Debug.Log("Duplicate instance ID " + instanceId.ToString());
+                if (instances.Contains(instanceId))
                     continue;
-                }
 
                 foreach (lol l in lols) {
-                    Debug.Log("Testing whether " + l.name + " == " + type + "...");
                     if (l.name != type) continue;
                     spawn(l.widget, instanceId, pcId, type, dataIds);
                     break;

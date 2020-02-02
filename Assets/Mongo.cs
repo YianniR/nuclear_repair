@@ -196,10 +196,8 @@ public class Mongo : MonoBehaviour
                     JSONObject obj = new JSONObject(webRequest.downloadHandler.text);
                     if (!obj.HasField("_error"))
                     {
-                        Debug.Log("Not an error");
                         if (obj.HasField("_items") && obj["_items"].list.Count > 1)
                         {
-                            Debug.Log("Updating rather than creating");
                             update = true;
                             etag = stripEnds(obj["_items"][0]["_etag"].ToString());
                             id = stripEnds(obj["_items"][0]["_id"].ToString());
