@@ -225,6 +225,7 @@ MonoBehaviour:
   type: 
   dataIds: 
   health: 100
+  maxHealth: 100
   meter: {fileID: 0}
   bar: {fileID: 0}
 --- !u!4 &157171996
@@ -540,7 +541,6 @@ MonoBehaviour:
   breaktime: 0
   mintime: 2
   maxtime: 10
-  reactor: {fileID: 0}
   impactWeight: 0.01
 --- !u!1 &2061951702 stripped
 GameObject:
@@ -571,7 +571,6 @@ MonoBehaviour:
   breaktime: 0
   mintime: 2
   maxtime: 10
-  reactor: {fileID: 0}
   impactWeight: 0.01
 --- !u!1001 &2378320876246189459
 PrefabInstance:
@@ -685,7 +684,7 @@ PrefabInstance:
         type: 3}
       propertyPath: lols.Array.data[2].widget
       value: 
-      objectReference: {fileID: 7575391756198208698, guid: 20e169ae56dc36c4080d07f58a24cbed,
+      objectReference: {fileID: 6892959078188084503, guid: 4905972d56d85354f9882c4a757bd976,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 847218f97a1dd6fd2a799c5ffe78cbd8, type: 3}
@@ -780,7 +779,7 @@ PrefabInstance:
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}
       propertyPath: secondsPerNewWidget
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}

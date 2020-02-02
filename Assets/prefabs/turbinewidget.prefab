@@ -1131,7 +1131,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2988166902144974478}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
   m_Children:
@@ -1143,7 +1143,7 @@ Transform:
   - {fileID: 6472840961620585322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!222 &2988166902144974477
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1164,13 +1164,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee95be55e072ec447a5179e56cceac16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instanceId: 0
+  pcId: 0
+  type: 
+  dataIds: 
   isrunning: 1
   rotspeed: 5
   now: 0
   breaktime: 0
   mintime: 2
   maxtime: 18
-  reactor: {fileID: 0}
   impactWeight: 0.01
 --- !u!1 &2988166902182933267
 GameObject:
