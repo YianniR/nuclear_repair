@@ -3,7 +3,6 @@ using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Remoting;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using UnityEditor;
@@ -60,7 +59,7 @@ public class Mongo : MonoBehaviour
 
         if (pcId != -1)
         {
-            genUrl += "?where={\"pcID\":" + pcId + "}";
+            genUrl += "?where={\"pcId\":" + pcId + "}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(genUrl))

@@ -5,8 +5,7 @@ using UnityEngine.Networking;
 
 
 public class Spawner : MonoBehaviour {
-    public string widgetUrl = "localhost";
-    public string dataUrl = "localhost";
+    public int pcId;
 
     public string widgetsPath = "widgets.json";
 
@@ -14,9 +13,9 @@ public class Spawner : MonoBehaviour {
 
     public Dictionary<string, GameObject> widgets;
 
-    private float untilNextDBPoll;
-
     public int widgetSize;
+
+    private float untilNextDBPoll;
 
     [System.Serializable]
     public struct lol {
@@ -68,26 +67,34 @@ public class Spawner : MonoBehaviour {
         string filePath = widgetsPath.Replace(".json", "");
         string jsonText = Resources.Load<TextAsset>(filePath).text;
 
-        // Get info about the (potential) new widget.
-        JSONObject json = new JSONObject(jsonText);
-        string typename = json["type"].ToString();
-        int id = System.Int32.Parse(json["instanceId"].ToString());
-        int partnerId = System.Int32.Parse(json["partnerId"].ToString());
+        StartCoroutine(Mongo.GetWidgets((JSONObject data) => {
+            foreach (JSONObject json in data["_items"].list) {
+                // Get info about the (potential) new widget.
+                int pcId = (int)json["pcId"].n;
+                string type = json["type"].str;
+                int instanceId = (int)json["instanceId"].n;
+                List<int> dataIds = new List<int>();
+                foreach (JSONObject j in json["dataIds"].list) { dataIds.Add((int)j.n); }
 
-        // If the widget is of a known type, and not with an already used instance ID, then spawn it.
-        if (instances.Contains(id)) return;
+                // If the widget is of a known type, and not with an already used instance ID, then spawn it.
+                if (instances.Contains(instanceId)) {
+                    Debug.Log("Duplicate instance ID " + instanceId.ToString());
+                    continue;
+                }
 
-        foreach (lol l in lols) {
-            if (l.name != typename) continue;
-            spawn(id, l.widget, partnerId);
-            return;
-        }
-        Debug.Log("Unknown entity type '" + typename + "'!");
+                foreach (lol l in lols) {
+                    Debug.Log("Testing whether " + l.name + " == " + type + "...");
+                    if (l.name != type) continue;
+                    spawn(l.widget, instanceId, pcId, type, dataIds);
+                    break;
+                }
+            }
+        }, pcId));
     }
 
     // Instantiate a new widget.
-    public void spawn (int id, GameObject widget, int partnerId) {
-        instances.Add(id);
+    public void spawn (GameObject widget, int instanceId, int pcId, string type, List<int> dataIds) {
+        instances.Add(instanceId);
 
         Vector3 spawnLocation = Vector3.up;
         Vector2 spiralOffset = spiral() * widgetSize;
@@ -97,10 +104,13 @@ public class Spawner : MonoBehaviour {
         GameObject obj = Instantiate(widget, spawnLocation, Quaternion.identity);
 
         Widget wdg = obj.GetComponent<Widget>();
-        wdg.instanceId = id;
-        wdg.partnerId = partnerId;
+        wdg.instanceId = instanceId;
+        wdg.pcId = pcId;
+        wdg.type = type;
+        wdg.dataIds = dataIds;
     }
 
+    // Get the next position in the spiral. WARNING: stateful -- just call once per spiral position.
     public Vector2 spiral () {
         Vector2 offset = new Vector2(0, 0);
 
