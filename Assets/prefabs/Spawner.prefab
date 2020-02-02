@@ -47,6 +47,35 @@ MonoBehaviour:
   secondsPerWidgetDBPoll: 5
   widgetSize: 6
   lols:
-  - name: '"button"'
+  - name: bigbutton
     widget: {fileID: 1972068869815277511, guid: fc31a7f6afe1475419cfd23939a9d1f1,
+      type: 3}
+  - name: clock
+    widget: {fileID: 3462975018750085814, guid: fadee4a2f4f4a584f8c5206161d88109,
+      type: 3}
+  - name: health
+    widget: {fileID: 6892959078188084503, guid: 4905972d56d85354f9882c4a757bd976,
+      type: 3}
+  - name: start
+    widget: {fileID: 2257205470332470538, guid: 06817510fae455a4a91dfd307d392f90,
+      type: 3}
+  - name: keykiller
+    widget: {fileID: 788980348786527249, guid: 8d1bd567b1ae3d941a7a31d3fbf11545, type: 3}
+  - name: keymash
+    widget: {fileID: 5718874213531398668, guid: 7f1d0ae0df3ec13478e3e078b3be31d0,
+      type: 3}
+  - name: keymash_1bar
+    widget: {fileID: 2298276577123772145, guid: 9db6b9c5cfa7aaa4b88d311091fc95b5,
+      type: 3}
+  - name: KeySwapper
+    widget: {fileID: 2904128500542491501, guid: 1ab9702f0248a044985fbcc5f212400e,
+      type: 3}
+  - name: radarscreen
+    widget: {fileID: 5660735569608757226, guid: e45db7b1525722b4895bdc8cbb9897a7,
+      type: 3}
+  - name: turbine
+    widget: {fileID: 2988166902144974478, guid: bb689190ae2a50e419ef0ce9075b5e31,
+      type: 3}
+  - name: numpad
+    widget: {fileID: 4528287231298876979, guid: 9763b9bd6233a0e498761a4fb9093a05,
       type: 3}
