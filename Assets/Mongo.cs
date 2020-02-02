@@ -13,7 +13,7 @@ public class Mongo : MonoBehaviour
     {
         // StartCoroutine(GetRequest("widgets", printData));
         //
-        StartCoroutine(CreateOrUpdateData("{\"dataId\":3, \"type\":\"health\" }", printData));
+        // StartCoroutine(CreateOrUpdateData("{\"dataId\":3, \"type\":\"health\" }", printData));
 
         // StartCoroutine(DeleteEverything());
 
@@ -157,8 +157,6 @@ public class Mongo : MonoBehaviour
     {
         var genUrl = Url + "widgets";
         var where = "";
-
-
 
         var dataObj = new JSONObject(data);
 
