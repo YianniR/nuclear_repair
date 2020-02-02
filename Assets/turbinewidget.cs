@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class turbinewidget : MonoBehaviour
+public class turbinewidget : Widget
 {
     public bool isrunning = true;
     string to_enter = "";
@@ -16,7 +16,6 @@ public class turbinewidget : MonoBehaviour
     public float mintime = 2;
     public float maxtime = 10;
 
-    public GameObject reactor;
     public float impactWeight = 0.01f;
 
     GameObject turbine;
@@ -27,7 +26,6 @@ public class turbinewidget : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(mintime, maxtime);
         turbine = this.transform.Find("turbine").gameObject;
         codetext = this.transform.Find("Text/tex").GetComponent<TextMesh>();
@@ -63,7 +61,7 @@ public class turbinewidget : MonoBehaviour
         else //not running
         {
             light.enabled = true;
-            reactor.GetComponent<Reactor>().health -= impactWeight;
+            StartCoroutine(Mongo.LoseHealth(impactWeight));
             smooth_rotspeed -= smooth_down;
             if (smooth_rotspeed < 0)
             {

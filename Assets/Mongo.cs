@@ -348,7 +348,7 @@ public class Mongo : MonoBehaviour
     }
 
     //////////////////////////////// HEALTH //////////////////////////////////////////////
-    public static IEnumerator LoseHealth(int amount = 1)
+    public static IEnumerator LoseHealth(float amount = 1)
     {
         var genUrl = Url + "data";
         var data = "{\"type\":\"health\", \"amount\":" + amount + "}";
@@ -375,7 +375,7 @@ public class Mongo : MonoBehaviour
         }
     }
 
-    public static IEnumerator GetHealthLost(Action<int> callbackFunc)
+    public static IEnumerator GetHealthLost(Action<float> callbackFunc)
     {
         var genUrl = Url + "data";
 
@@ -397,14 +397,14 @@ public class Mongo : MonoBehaviour
             {
                 Debug.Log(genUrl + ":\nHealth (GET) Received: \n" + webRequest.downloadHandler.text);
 
-                int healthLost = 0;
+                float healthLost = 0;
 
                 JSONObject jsonObject = new JSONObject(webRequest.downloadHandler.text);
                 foreach (var item in jsonObject["_items"].list)
                 {
                     if (item.HasField("amount"))
                     {
-                        healthLost += (int) item["amount"].n;
+                        healthLost += item["amount"].n;
                     }
                 }
 

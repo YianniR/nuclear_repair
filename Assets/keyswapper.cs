@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyswapper : MonoBehaviour
+public class keyswapper : Widget
 {
     public char key1;
     public char key2;

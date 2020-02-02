@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Keyandbar : MonoBehaviour
+public class Keyandbar : Widget
 {
     public float downspeed = 1;
     public float upspeed = 1;
@@ -9,7 +9,6 @@ public class Keyandbar : MonoBehaviour
     public float barlevel = 1;
     keyinputmanager inpmanager;
 
-    public GameObject reactor;
     public float impactWeight=0.01f;
 
     GameObject meter;
@@ -21,7 +20,6 @@ public class Keyandbar : MonoBehaviour
         mychar = Alphabet[Random.Range(0, 25)];
         ((TextMesh)this.transform.Find("Text").GetComponent<TextMesh>()).text = mychar;
         inpmanager = GameObject.Find("KeyInputManager").GetComponent<keyinputmanager>();
-        reactor = GameObject.FindWithTag("Reactor");
         meter = this.transform.Find("Meter").gameObject;
     }
 
@@ -65,7 +63,7 @@ public class Keyandbar : MonoBehaviour
         if (barlevel <= 0)
         {
             barlevel = 0;
-            reactor.GetComponent<Reactor>().health -= impactWeight;
+            StartCoroutine(Mongo.LoseHealth(impactWeight));
         }
     }
 
