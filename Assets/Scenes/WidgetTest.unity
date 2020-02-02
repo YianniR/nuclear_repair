@@ -796,7 +796,7 @@ PrefabInstance:
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}
       propertyPath: secondsPerNewWidget
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}
