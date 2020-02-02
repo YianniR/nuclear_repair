@@ -330,9 +330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3932325221169b4f9f46f3ac1d09717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label_name1: Cooling
+  label_name1: COOLING
   label_name2: PSI
-  label_name3: Power Out
+  label_name3: POWER OUT
 --- !u!1 &6061743146908330103
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +568,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 926fa811245d7f64cbf0dfeda78955c2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -597,17 +597,17 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8920378748921843617}
-  m_Text: Monitoring
+  m_Text: MONITORING
   m_OffsetZ: 0
-  m_CharacterSize: 0.5
+  m_CharacterSize: 0.06
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 926fa811245d7f64cbf0dfeda78955c2, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
