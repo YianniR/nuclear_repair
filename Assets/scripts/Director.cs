@@ -25,16 +25,16 @@ public class Director : MonoBehaviour {
 
     private int widgetChoiceIndex = 0;
     private List<string> startingWidgetSequence = new List<string>{
-        "clock", "health", "bigbutton"
+        "start", "clock", "health", "bigbutton"
     };
     private int pcIdChoiceIndex = 0;
     private List<int> startingPcIdSequence = new List<int>{
-        1, 1, 1
+        1, 1, 1, 1
     };
 
     // Start is called before the first frame update
     void Start () {
-        untilNextWidget = secondsPerNewWidget;
+        untilNextWidget = 0.0f;
 
         StartCoroutine(Mongo.DeleteEverything());
         readyForSpawning = true;  // callback lol
