@@ -14,12 +14,6 @@ public class Keyandbar : Widget
 
     GameObject meter;
 
-    private bool _readyToPoll = true;
-    public float SecondsPerPoll = 0.5f;
-    public float PollTimeoutDeadline = 1.5f;
-    private float _untilNextPoll;
-    private float _untilPollTimeoutDeadline;
-
 
     // Start is called before the first frame update
     void Start()
@@ -60,19 +54,6 @@ public class Keyandbar : Widget
         meter.transform.localScale = new Vector3(1, scaledlevel, 1);
     }
 
-    void FixedUpdate()
-    {
-        _untilPollTimeoutDeadline -= Time.deltaTime;
-        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
-        {
-            _readyToPoll = true;
-        }
-
-        // Reduce time to poll
-        _untilNextPoll -= Time.deltaTime;
-    }
-
-
     void barup()
     {
         barlevel += upspeed;
@@ -88,11 +69,7 @@ public class Keyandbar : Widget
         if (barlevel <= 0)
         {
             barlevel = 0;
-            if (_untilNextPoll <= 0.0f && _readyToPoll)
-            {
-                StartCoroutine(Mongo.LoseHealth(impactWeight));
-                _untilNextPoll = SecondsPerPoll;
-            }
+            WorldData.LoseHealth(impactWeight);
         }
     }
 }

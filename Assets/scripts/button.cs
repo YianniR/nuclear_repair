@@ -18,12 +18,6 @@ public class button : Widget
 
     public float impactWeight = 0.01f;
 
-    private bool _readyToPoll = true;
-    public float SecondsPerPoll = 0.5f;
-    public float PollTimeoutDeadline = 1.5f;
-    private float _untilNextPoll;
-    private float _untilPollTimeoutDeadline;
-
     Light light;
 
     // Start is called before the first frame update
@@ -49,11 +43,7 @@ public class button : Widget
         else //not running
         {
             light.enabled = true;
-            if (_untilNextPoll <= 0.0f && _readyToPoll)
-            {
-                StartCoroutine(Mongo.LoseHealth(impactWeight));
-                _untilNextPoll = SecondsPerPoll;
-            }
+            WorldData.LoseHealth(impactWeight);
 
             if (pressed)
             {
@@ -61,18 +51,6 @@ public class button : Widget
                 nextbreak = Time.time + Random.Range(mintime, maxtime);
             }
         }
-    }
-
-    void FixedUpdate()
-    {
-        _untilPollTimeoutDeadline -= Time.deltaTime;
-        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
-        {
-            _readyToPoll = true;
-        }
-
-        // Reduce time to poll
-        _untilNextPoll -= Time.deltaTime;
     }
 
     public void OnMouseDown()
