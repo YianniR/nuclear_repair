@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pcId: 1
-  secondsPerNewWidget: 5
+  secondsPerNewWidget: 3
   randomChoiceWidgets:
   - bigbutton
   - keykiller
@@ -53,4 +53,6 @@ MonoBehaviour:
   - KeySwapper
   - radarscreen
   - turbine
-  - numpad
+  onlySpawnOneOf:
+  - radarscreen
+  - KeySwapper

@@ -177,7 +177,7 @@ MonoBehaviour:
   pcId: 0
   type: 
   dataIds: 
-  numsecs: 300
+  numsecs: 180
   grace: 5
 --- !u!1 &4085737403882164868
 GameObject:

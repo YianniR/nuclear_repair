@@ -61,9 +61,17 @@ public class Director : MonoBehaviour {
     };
     private int firstWidgetsIndex = 0;
 
+    public List<string> onlySpawnOneOf = new List<string>();
+    public HashSet<string> spawnableTypes = new HashSet<string>();
+
+
     // Start is called before the first frame update
     void Start () {
         untilNextWidget = 0.0f;
+
+        foreach (string s in randomChoiceWidgets) {
+            spawnableTypes.Add(s);
+        }
 
         StartCoroutine(Mongo.DeleteEverything());
         readyForSpawning = true;  // callback lol
@@ -81,6 +89,8 @@ public class Director : MonoBehaviour {
 
     // Start the spawn timer.
     public void startSpawning () {
+        if (startedPeriodicSpawning)
+            return;
         startedPeriodicSpawning = true;
         requestNewWidget();
         untilNextWidget = secondsPerNewWidget;
@@ -114,7 +124,8 @@ public class Director : MonoBehaviour {
         if (firstWidgetsIndex < firstWidgets.Count)
             return firstWidgets[firstWidgetsIndex].pcId;
 
-        return Random.Range(1, 3);
+        /* return Random.Range(1, 3); */
+        return 1;
     }
 
     private string makeWidget () {
@@ -124,7 +135,24 @@ public class Director : MonoBehaviour {
         if (firstWidgetsIndex < firstWidgets.Count)
             return firstWidgets[firstWidgetsIndex].type;
 
-        return randomChoiceWidgets[Random.Range(0, randomChoiceWidgets.Count)];
+        // Get a random element of the set.
+        int idx = Random.Range(0, spawnableTypes.Count);
+        int size = spawnableTypes.Count;
+        int i = 0;
+        string choice = "";
+        foreach (string str in spawnableTypes) {
+            if (i == idx) {
+                choice = str;
+                break;
+            } else {
+                i++;
+            }
+        }
+
+        if (onlySpawnOneOf.Contains(choice))
+            spawnableTypes.Remove(choice);
+
+        return choice;
     }
 
     private List<int> makeDataIds () {

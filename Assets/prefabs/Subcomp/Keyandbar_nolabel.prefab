@@ -242,10 +242,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99091a30edb64af46b77cbfe1227505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downspeed: 0.01
+  instanceId: 0
+  pcId: 0
+  type: 
+  dataIds: 
+  downspeed: 0.002
   upspeed: 0.1
   barlevel: 1
-  reactor: {fileID: 0}
   impactWeight: 0.01
 --- !u!23 &6117853661802140892
 MeshRenderer:
