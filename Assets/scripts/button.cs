@@ -28,7 +28,7 @@ public class button : Widget
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         now = Time.time;
         if (isrunning)

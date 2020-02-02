@@ -22,7 +22,7 @@ public class keyswapper : Widget
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Time.time > next_swap)
         {

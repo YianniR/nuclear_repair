@@ -18,7 +18,7 @@ public class flickerIntensity : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         change = Random.Range(minChange, maxChange);
         this.GetComponent<Light>().intensity += change;

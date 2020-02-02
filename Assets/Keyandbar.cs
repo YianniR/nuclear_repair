@@ -30,7 +30,7 @@ public class Keyandbar : Widget
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         char realkey = inpmanager.MapKey(mychar.ToLower()[0]);
 
