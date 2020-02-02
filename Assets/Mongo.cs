@@ -12,7 +12,7 @@ public class Mongo : MonoBehaviour
     {
         // StartCoroutine(GetRequest("widgets", printData));
         //
-        // StartCoroutine(CreateOrUpdateWidget("{\"instanceId\":3, \"pcId\":1, \"type\":\"box\" }", printData));
+        // StartCoroutine(CreateOrUpdateWidget("{\"instanceId\":3, \"pcId\":1, \"type\":\"cow\" }", printData));
 
         // StartCoroutine(GetRequest("data/1", printData));
 
@@ -22,6 +22,14 @@ public class Mongo : MonoBehaviour
     private void printData(string data)
     {
         Debug.Log("PRINTING: " + data);
+    }
+
+    public static string stripEnds(string text)
+    {
+        var index = text.Length;
+        text = text.Remove(0, 1);
+        text = text.Remove(index - 2, 1);
+        return text;
     }
     ///////////////////////////// GETTERS ////////////////////////////////////////////
 
@@ -193,8 +201,8 @@ public class Mongo : MonoBehaviour
                         {
                             Debug.Log("Updating rather than creating");
                             update = true;
-                            etag = obj["_items"][0]["_etag"].ToString();
-                            id = obj["_items"][0]["_id"].ToString();
+                            etag = stripEnds(obj["_items"][0]["_etag"].ToString());
+                            id = stripEnds(obj["_items"][0]["_id"].ToString());
                         }
                         else
                         {
@@ -227,6 +235,7 @@ public class Mongo : MonoBehaviour
                 else
                 {
                     Debug.Log(genUrl + "/" + id + data + ":\n Patch Received: \n" + webRequest.downloadHandler.text);
+                    Debug.Log("Etag " + etag + " ID " + id);
                     callbackFunc(webRequest.downloadHandler.text);
                     yield return webRequest.downloadHandler.text;
                 }
@@ -304,8 +313,8 @@ public class Mongo : MonoBehaviour
                         if (obj.HasField("_items") && obj["_items"].list.Count > 1)
                         {
                             update = true;
-                            etag = obj["_items"][0]["_etag"].ToString();
-                            id = obj["_items"][0]["_id"].ToString();
+                            etag = stripEnds(obj["_items"][0]["_etag"].ToString());
+                            id = stripEnds(obj["_items"][0]["_id"].ToString());
                         }
                     }
 
