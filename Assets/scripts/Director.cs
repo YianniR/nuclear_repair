@@ -70,7 +70,7 @@ public class Director : MonoBehaviour {
             return startingPcIdSequence[pcIdChoiceIndex - 1];
         }
 
-        return Random.Range(1, 2);
+        return Random.Range(1, 3);
     }
 
     private string nextWidget () {
