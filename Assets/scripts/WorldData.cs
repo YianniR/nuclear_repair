@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldData : MonoBehaviour {
-    public float secondsPerPoll = 1;
+    public static float secondsPerPoll = 0.2f;
     public float pollTimeoutDeadline = 1.5f;
 
+    private static float HealthLostOnCycle;
 
     private float untilNextPoll;
     private float untilPollTimeoutDeadline;
@@ -79,5 +80,13 @@ public class WorldData : MonoBehaviour {
             data = newData;
             readyToPoll = true;
         }));
+
+        StartCoroutine(Mongo.LoseHealth(HealthLostOnCycle));
+        HealthLostOnCycle = 0;
+    }
+
+    public static void LoseHealth(float amount)
+    {
+        HealthLostOnCycle += amount;
     }
 }

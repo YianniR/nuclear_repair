@@ -31,12 +31,6 @@ public class numpad : Widget
 
     public float impactWeight = 0.01f;
 
-    private bool _readyToPoll = true;
-    public float SecondsPerPoll = 0.5f;
-    public float PollTimeoutDeadline = 1.5f;
-    private float _untilNextPoll;
-    private float _untilPollTimeoutDeadline;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -78,7 +72,7 @@ public class numpad : Widget
         else //not running
         {
             light.enabled = true;
-            StartCoroutine(Mongo.LoseHealth(impactWeight));
+            WorldData.LoseHealth(impactWeight);
 
             if (_0.pressed) { entered += "0"; }
             if (_1.pressed) { entered += "1"; }
@@ -104,16 +98,7 @@ public class numpad : Widget
 
         }
     }
-    void FixedUpdate()
-    {
-        _untilPollTimeoutDeadline -= Time.deltaTime;
-        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
-        {
-            _readyToPoll = true;
-        }
-        // Reduce time to poll
-        _untilNextPoll -= Time.deltaTime;
-    }
+
     string randomint()
     {
         int PIN = Random.Range(0, 9);
