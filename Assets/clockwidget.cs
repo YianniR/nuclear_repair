@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class clockwidget : MonoBehaviour
+public class clockwidget : Widget
 {
     float endtime;
     public int numsecs = 300;
@@ -35,6 +35,5 @@ public class clockwidget : MonoBehaviour
 
         minstxt.text = mins.ToString().PadLeft(2, '0');
         secstxt.text = secs.ToString().PadLeft(2, '0');
-        
     }
 }

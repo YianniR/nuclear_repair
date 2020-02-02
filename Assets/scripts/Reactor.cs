@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Reactor : MonoBehaviour {
+public class Reactor : Widget {
     public float health = 100f;
     public GameObject meter;
     public GameObject bar;

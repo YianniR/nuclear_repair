@@ -6,7 +6,7 @@ public class Director : MonoBehaviour {
     public int pcId;
     public float secondsPerNewWidget = 5;
 
-    public List<string> availableWidgets;
+    public List<string> randomChoiceWidgets;
 
     private float untilNextWidget;
 
@@ -22,6 +22,15 @@ public class Director : MonoBehaviour {
         public string type;
         public List<int> dataIds;
     }
+
+    private int widgetChoiceIndex = 0;
+    private List<string> startingWidgetSequence = new List<string>{
+        "clock", "health", "bigbutton"
+    };
+    private int pcIdChoiceIndex = 0;
+    private List<int> startingPcIdSequence = new List<int>{
+        1, 1, 1
+    };
 
     // Start is called before the first frame update
     void Start () {
@@ -44,12 +53,32 @@ public class Director : MonoBehaviour {
     private void requestNewWidget () {
         Request r;
         r.instanceId = instanceCount;
-        r.pcId = pcId;
-        r.type = availableWidgets[Random.Range(0, availableWidgets.Count)];
+        /* r.pcId = pcId; */
+        r.pcId = nextPcId();
+        /* r.type = availableWidgets[Random.Range(0, availableWidgets.Count)]; */
+        r.type = nextWidget();
         r.dataIds = new List<int>();
 
         instanceCount += 1;
 
         StartCoroutine(Mongo.CreateOrUpdateWidget(JsonUtility.ToJson(r), (string response) => { return; }));
+    }
+
+    private int nextPcId () {
+        if (pcIdChoiceIndex < startingPcIdSequence.Count) {
+            pcIdChoiceIndex += 1;
+            return startingPcIdSequence[pcIdChoiceIndex - 1];
+        }
+
+        return Random.Range(1, 2);
+    }
+
+    private string nextWidget () {
+        if (widgetChoiceIndex < startingWidgetSequence.Count) {
+            widgetChoiceIndex += 1;
+            return startingWidgetSequence[widgetChoiceIndex - 1];
+        }
+
+        return randomChoiceWidgets[Random.Range(0, randomChoiceWidgets.Count)];
     }
 }
