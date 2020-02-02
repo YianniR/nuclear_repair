@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Reactor : Widget
@@ -76,6 +77,11 @@ public class Reactor : Widget
             spotlight.transform.Rotate(new Vector3(0, 1, 0), 0.5f);
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
+
+        if (health <= 0)
+        {
+            Lose();
+        }
     }
 
     void FixedUpdate()
@@ -106,9 +112,9 @@ public class Reactor : Widget
         }
     }
 
-    public void lose()
+    public void Lose()
     {
         Debug.Log("You LOSE!");
-        // TODO Load the 'you lost' scene.
+        SceneManager.LoadScene("armagedonScene", LoadSceneMode.Single);
     }
 }
