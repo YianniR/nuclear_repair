@@ -12,12 +12,6 @@ public class radarscreen : Widget
 
     public float impactWeight = 0.01f;
 
-    private bool _readyToPoll = true;
-    public float SecondsPerPoll = 0.5f;
-    public float PollTimeoutDeadline = 1.5f;
-    private float _untilNextPoll;
-    private float _untilPollTimeoutDeadline;
-
     AudioSource source;
 
     // Start is called before the first frame update
@@ -59,27 +53,12 @@ public class radarscreen : Widget
         {
             _light.GetComponent<Light>().color = Color.red;
             _light.GetComponent<Light>().range = 0.31f; 
-            if (_untilNextPoll <= 0.0f && _readyToPoll)
-            {
-                StartCoroutine(Mongo.LoseHealth(impactWeight));
-                _untilNextPoll = SecondsPerPoll;
-            }
+            WorldData.LoseHealth(impactWeight);
         }
         else
         {
             _light.GetComponent<Light>().color = Color.green;
             _light.GetComponent<Light>().range = 0.21f;
         }
-    }
-
-    void FixedUpdate()
-    {
-        _untilPollTimeoutDeadline -= Time.deltaTime;
-        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
-        {
-            _readyToPoll = true;
-        }
-        // Reduce time to poll
-        _untilNextPoll -= Time.deltaTime;
     }
 }

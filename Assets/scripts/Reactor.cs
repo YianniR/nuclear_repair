@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Reactor : Widget
 {
-    public float health = 100f;
     public float maxHealth = 100f;
+    private float health;
     public GameObject meter;
     public GameObject bar;
     Light spotlight;
@@ -20,12 +20,16 @@ public class Reactor : Widget
     bool audio3Playing = false;
 
     private bool _readyToPoll = true;
-    public float SecondsPerPoll = 0.5f;
     public float PollTimeoutDeadline = 1.5f;
     private float _untilNextPoll;
     private float _untilPollTimeoutDeadline;
 
     private float _untilNextTemperatureIncrease;
+
+    void Awake()
+    {
+        health = maxHealth;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +48,7 @@ public class Reactor : Widget
     {
         health = Mathf.Clamp(health, 0, maxHealth);
 
-        meter.transform.localScale = new Vector3(1, 1, health/100f);
+        meter.transform.localScale = new Vector3(1, 1, health / maxHealth);
 
         if (health <= 66f && health >= 33f)
         {
@@ -88,7 +92,7 @@ public class Reactor : Widget
         if (_untilNextPoll <= 0.0f && _readyToPoll)
         {
             StartCoroutine(Mongo.GetHealthLost(UpdateHealth));
-            _untilNextPoll = SecondsPerPoll;
+            _untilNextPoll = WorldData.secondsPerPoll;
         }
     }
 
