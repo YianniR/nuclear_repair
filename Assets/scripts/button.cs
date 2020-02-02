@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class button : Widget
@@ -17,6 +18,8 @@ public class button : Widget
     public float maxtime = 10;
 
     public float impactWeight = 0.01f;
+
+    public bool isRestartButton = false;
 
     Light light;
 
@@ -58,6 +61,10 @@ public class button : Widget
         Debug.Log("OnMouseDown");
         cylinder.Translate(Vector3.down * depth);
         pressed = true;
+        if (isRestartButton)
+        {
+            SceneManager.LoadScene("WidgetTest", LoadSceneMode.Single);
+        }
     }
 
     public void OnMouseUp()
