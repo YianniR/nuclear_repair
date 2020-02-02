@@ -43,10 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926488e6c883ecc609966639d34e5526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widgetUrl: localhost
-  dataUrl: localhost
-  widgetsPath: widgets.json
-  dataPath: data.json
+  pcId: 1
   secondsPerWidgetDBPoll: 5
   widgetSize: 6
   lols:

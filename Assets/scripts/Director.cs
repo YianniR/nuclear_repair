@@ -12,6 +12,8 @@ public class Director : MonoBehaviour {
 
     private int instanceCount = 0;
 
+    public bool readyForSpawning { get; private set; } = false;
+
 
     [System.Serializable]
     private struct Request {
@@ -24,6 +26,9 @@ public class Director : MonoBehaviour {
     // Start is called before the first frame update
     void Start () {
         untilNextWidget = secondsPerNewWidget;
+
+        StartCoroutine(Mongo.DeleteEverything());
+        readyForSpawning = true;  // callback lol
     }
 
     // Update is called once per frame

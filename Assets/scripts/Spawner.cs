@@ -23,6 +23,8 @@ public class Spawner : MonoBehaviour {
 
     private List<int> instances = new List<int>();
 
+    private Director director;
+
 
     ///// SPIRALS
     enum Direction { UP, RIGHT, DOWN, LEFT };
@@ -37,6 +39,8 @@ public class Spawner : MonoBehaviour {
     void Start () {
         untilNextDBPoll = secondsPerWidgetDBPoll;
 
+        director = GameObject.FindWithTag("Director").GetComponent<Director>();
+
         ///// SPIRALS
         currentSideLength = 0;
         currentProgressOnSide = 1;
@@ -49,7 +53,7 @@ public class Spawner : MonoBehaviour {
     void Update () {
         // Poll for new widgets.
         untilNextDBPoll -= Time.deltaTime;
-        if (untilNextDBPoll <= 0.0f) {
+        if (untilNextDBPoll <= 0.0f && director.readyForSpawning) {
             getWidgets();
             untilNextDBPoll = secondsPerWidgetDBPoll;
         }
