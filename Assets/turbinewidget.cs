@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class turbinewidget : MonoBehaviour
+public class turbinewidget : Widget
 {
     public bool isrunning = true;
     string to_enter = "";
@@ -16,8 +16,13 @@ public class turbinewidget : MonoBehaviour
     public float mintime = 2;
     public float maxtime = 10;
 
-    public GameObject reactor;
     public float impactWeight = 0.01f;
+
+    private bool _readyToPoll = true;
+    public float SecondsPerPoll = 0.5f;
+    public float PollTimeoutDeadline = 1.5f;
+    private float _untilNextPoll;
+    private float _untilPollTimeoutDeadline;
 
     GameObject turbine;
     TextMesh codetext;
@@ -27,13 +32,11 @@ public class turbinewidget : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(mintime, maxtime);
         turbine = this.transform.Find("turbine").gameObject;
         codetext = this.transform.Find("Text/tex").GetComponent<TextMesh>();
         light = this.transform.Find("light/LedLight").GetComponent<Light>();
         inpmanager = GameObject.Find("KeyInputManager").GetComponent<keyinputmanager>();
-
     }
 
     // Update is called once per frame
@@ -54,7 +57,7 @@ public class turbinewidget : MonoBehaviour
                 smooth_rotspeed = rotspeed;
             }
 
-            if(Time.time > nextbreak)
+            if (Time.time > nextbreak)
             {
                 isrunning = false;
                 to_enter = randomchar() + randomchar() + randomchar() + randomchar();
@@ -63,12 +66,18 @@ public class turbinewidget : MonoBehaviour
         else //not running
         {
             light.enabled = true;
-            reactor.GetComponent<Reactor>().health -= impactWeight;
+            if (_untilNextPoll <= 0.0f && _readyToPoll)
+            {
+                StartCoroutine(Mongo.LoseHealth(impactWeight));
+                _untilNextPoll = SecondsPerPoll;
+            }
+
             smooth_rotspeed -= smooth_down;
             if (smooth_rotspeed < 0)
             {
                 smooth_rotspeed = 0;
             }
+
             if (to_enter.Length > 0)
             {
                 char realkey = inpmanager.MapKey(to_enter.ToLower()[0]);
@@ -86,16 +95,26 @@ public class turbinewidget : MonoBehaviour
                 isrunning = true;
                 nextbreak = Time.time + Random.Range(mintime, maxtime);
             }
-
         }
+
+        _untilPollTimeoutDeadline -= Time.deltaTime;
+        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
+        {
+            _readyToPoll = true;
+        }
+
+        // Reduce time to poll
+        _untilNextPoll -= Time.deltaTime;
     }
 
     string randomchar()
     {
-        string[] Alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        string[] Alphabet = new string[26]
+        {
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z"
+        };
         string mychar = Alphabet[Random.Range(0, 25)];
         return mychar;
     }
 }
-
-

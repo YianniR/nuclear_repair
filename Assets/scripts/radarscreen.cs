@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class radarscreen : MonoBehaviour
+public class radarscreen : Widget
 {
     Vector3 velocity;                   // The vector to store the direction of the player's movement.
     Vector3 randomvelocity;                   // The vector to store the direction of the player's movement.
@@ -10,14 +10,19 @@ public class radarscreen : MonoBehaviour
     float nextbreak = 0;
     public float maxRadius;
 
-    public GameObject reactor;
     public float impactWeight = 0.01f;
+
+    private bool _readyToPoll = true;
+    public float SecondsPerPoll = 0.5f;
+    public float PollTimeoutDeadline = 1.5f;
+    private float _untilNextPoll;
+    private float _untilPollTimeoutDeadline;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _light = transform.Find("screen/radarlight").gameObject;
-        reactor = GameObject.FindWithTag("Reactor");
         nextbreak = Time.time + Random.Range(5, 10);
     }
 
@@ -47,13 +52,28 @@ public class radarscreen : MonoBehaviour
         if(pos.magnitude > maxRadius * 3f/4f)
         {
             _light.GetComponent<Light>().color = Color.red;
-            _light.GetComponent<Light>().range = 0.31f;
-            reactor.GetComponent<Reactor>().health -= impactWeight;
+            _light.GetComponent<Light>().range = 0.31f; 
+            if (_untilNextPoll <= 0.0f && _readyToPoll)
+            {
+                StartCoroutine(Mongo.LoseHealth(impactWeight));
+                _untilNextPoll = SecondsPerPoll;
+            }
         }
         else
         {
             _light.GetComponent<Light>().color = Color.green;
             _light.GetComponent<Light>().range = 0.21f;
         }
+    }
+
+    void FixedUpdate()
+    {
+        _untilPollTimeoutDeadline -= Time.deltaTime;
+        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
+        {
+            _readyToPoll = true;
+        }
+        // Reduce time to poll
+        _untilNextPoll -= Time.deltaTime;
     }
 }

@@ -225,8 +225,11 @@ MonoBehaviour:
   type: 
   dataIds: 
   health: 100
+  maxHealth: 100
   meter: {fileID: 0}
   bar: {fileID: 0}
+  SecondsPerPoll: 0.5
+  PollTimeoutDeadline: 1.5
 --- !u!4 &157171996
 Transform:
   m_ObjectHideFlags: 0
@@ -540,8 +543,9 @@ MonoBehaviour:
   breaktime: 0
   mintime: 2
   maxtime: 10
-  reactor: {fileID: 0}
   impactWeight: 0.01
+  SecondsPerPoll: 0.5
+  PollTimeoutDeadline: 1.5
 --- !u!1 &2061951702 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 500428055964324764, guid: fc31a7f6afe1475419cfd23939a9d1f1,
@@ -571,8 +575,9 @@ MonoBehaviour:
   breaktime: 0
   mintime: 2
   maxtime: 10
-  reactor: {fileID: 0}
   impactWeight: 0.01
+  SecondsPerPoll: 0.5
+  PollTimeoutDeadline: 1.5
 --- !u!1001 &2378320876246189459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -643,7 +648,7 @@ PrefabInstance:
     - target: {fileID: 2378320876031480061, guid: 847218f97a1dd6fd2a799c5ffe78cbd8,
         type: 3}
       propertyPath: lols.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2378320876031480061, guid: 847218f97a1dd6fd2a799c5ffe78cbd8,
         type: 3}
@@ -685,7 +690,18 @@ PrefabInstance:
         type: 3}
       propertyPath: lols.Array.data[2].widget
       value: 
-      objectReference: {fileID: 7575391756198208698, guid: 20e169ae56dc36c4080d07f58a24cbed,
+      objectReference: {fileID: 6892959078188084503, guid: 4905972d56d85354f9882c4a757bd976,
+        type: 3}
+    - target: {fileID: 2378320876031480061, guid: 847218f97a1dd6fd2a799c5ffe78cbd8,
+        type: 3}
+      propertyPath: lols.Array.data[3].name
+      value: start
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378320876031480061, guid: 847218f97a1dd6fd2a799c5ffe78cbd8,
+        type: 3}
+      propertyPath: lols.Array.data[3].widget
+      value: 
+      objectReference: {fileID: 2257205470332470538, guid: 06817510fae455a4a91dfd307d392f90,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 847218f97a1dd6fd2a799c5ffe78cbd8, type: 3}
@@ -780,7 +796,7 @@ PrefabInstance:
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}
       propertyPath: secondsPerNewWidget
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3121069583413503821, guid: e4c5eb1ad99dc88259e637f04560ed23,
         type: 3}

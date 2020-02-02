@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // Add the TextMesh Pro namespace to access the various functions.
 
-public class numpad : MonoBehaviour
+public class numpad : Widget
 {
     public bool isrunning = true;
 
@@ -29,8 +29,13 @@ public class numpad : MonoBehaviour
     TextMeshPro textmesh;
     Light light;
 
-    public GameObject reactor;
     public float impactWeight = 0.01f;
+
+    private bool _readyToPoll = true;
+    public float SecondsPerPoll = 0.5f;
+    public float PollTimeoutDeadline = 1.5f;
+    private float _untilNextPoll;
+    private float _untilPollTimeoutDeadline;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +54,6 @@ public class numpad : MonoBehaviour
         _9 = GameObject.Find("9").GetComponent<small_button>();
         textmesh = GameObject.Find("screen/text").GetComponent<TextMeshPro>();
         light = this.transform.Find("light/LedLight").GetComponent<Light>();
-        reactor = GameObject.FindWithTag("Reactor");
 
     }
 
@@ -74,7 +78,7 @@ public class numpad : MonoBehaviour
         else //not running
         {
             light.enabled = true;
-            reactor.GetComponent<Reactor>().health -= impactWeight;
+            StartCoroutine(Mongo.LoseHealth(impactWeight));
 
             if (_0.pressed) { entered += "0"; }
             if (_1.pressed) { entered += "1"; }
@@ -100,7 +104,16 @@ public class numpad : MonoBehaviour
 
         }
     }
-
+    void FixedUpdate()
+    {
+        _untilPollTimeoutDeadline -= Time.deltaTime;
+        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
+        {
+            _readyToPoll = true;
+        }
+        // Reduce time to poll
+        _untilNextPoll -= Time.deltaTime;
+    }
     string randomint()
     {
         int PIN = Random.Range(0, 9);
