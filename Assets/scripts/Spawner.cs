@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour {
 
 
     void Start () {
-        untilNextDBPoll = secondsPerWidgetDBPoll;
+        untilNextDBPoll = 0.0f;
 
         GameObject gmDirector = GameObject.FindWithTag("Director");
         if (director != null)
@@ -102,7 +102,7 @@ public class Spawner : MonoBehaviour {
         spawnLocation.x += spiralOffset.x;
         spawnLocation.z += spiralOffset.y;
 
-        GameObject obj = Instantiate(widget, spawnLocation, Quaternion.identity);
+        GameObject obj = Instantiate(widget, spawnLocation, widget.transform.rotation);
 
         Widget wdg = obj.GetComponent<Widget>();
         wdg.instanceId = instanceId;

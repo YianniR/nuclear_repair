@@ -10,6 +10,14 @@ public class Reactor : Widget
     public GameObject meter;
     public GameObject bar;
 
+    public AudioClip audio1;
+    public AudioClip audio2;
+    public AudioClip audio3;
+    AudioSource source;
+
+    bool audio2Playing = false;
+    bool audio3Playing = false;
+
     private bool _readyToPoll = true;
     public float PollTimeoutDeadline = 1.5f;
     private float _untilNextPoll;
@@ -27,6 +35,9 @@ public class Reactor : Widget
     {
         meter = this.transform.Find("health/Meter").gameObject;
         bar = this.transform.Find("health/Meter/bar").gameObject;
+        source = this.transform.GetComponent<AudioSource>();
+        source.clip = audio1;
+        source.Play();
     }
 
     // Update is called once per frame
@@ -35,13 +46,28 @@ public class Reactor : Widget
         health = Mathf.Clamp(health, 0, maxHealth);
 
         meter.transform.localScale = new Vector3(1, 1, health / maxHealth);
+
         if (health <= 66f && health >= 33f)
         {
+            if (!audio2Playing)
+            {
+                source.clip = audio2;
+                source.Play();
+                audio2Playing = true;
+            }
+ 
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
 
         if (health < 33f)
         {
+            if (!audio3Playing)
+            {
+                source.clip = audio3;
+                source.Play();
+                audio3Playing = true;
+            }
+
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
     }
