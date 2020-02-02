@@ -212,7 +212,8 @@ public class Mongo : MonoBehaviour
         yield return checkExistingAndSend(data, genUrl, where, callbackFunc);
     }
 
-    private static IEnumerator checkExistingAndSend(string data, string genUrl, string where, Action<string> callbackFunc)
+    private static IEnumerator checkExistingAndSend(string data, string genUrl, string where,
+        Action<string> callbackFunc)
     {
         var update = false;
         var etag = "";
