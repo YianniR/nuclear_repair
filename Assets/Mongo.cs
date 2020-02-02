@@ -14,7 +14,7 @@ public class Mongo : MonoBehaviour
         //
         // StartCoroutine(CreateOrUpdateWidget("{\"instanceId\":3, \"pcId\":1, \"type\":\"cow\" }", printData));
 
-        // StartCoroutine(GetRequest("data/1", printData));
+        StartCoroutine(DeleteEverything());
 
         // StartCoroutine(PatchRequest("data/5e35ba0b54988257208394c5", "{type:\"moo\"}", printData));
     }
@@ -368,6 +368,48 @@ public class Mongo : MonoBehaviour
                     callbackFunc(webRequest.downloadHandler.text);
                     yield return webRequest.downloadHandler.text;
                 }
+            }
+        }
+    }
+
+    //////////////////////////////// DELETE //////////////////////////////////////////
+    public static IEnumerator DeleteEverything()
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Delete(Url + "widgets"))
+        {
+            // webRequest.SetRequestHeader("X-HTTP-Method-Override", "POST");
+            // webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(Url + "widgets" + ": Post Error: " + webRequest.error);
+            }
+            else
+            {
+                // Debug.Log(Url + "widgets" + ":\n Post Received: \n" + webRequest.downloadHandler.text);
+                // yield return webRequest.downloadHandler.text;
+            }
+        }
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Delete(Url + "data"))
+        {
+            // webRequest.SetRequestHeader("X-HTTP-Method-Override", "POST");
+            // webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(Url + "data" + ": Post Error: " + webRequest.error);
+            }
+            else
+            {
+                // Debug.Log(Url + "data" + ":\n Post Received: \n" + webRequest.downloadHandler.text);
+                // yield return webRequest.downloadHandler.text;
             }
         }
     }
