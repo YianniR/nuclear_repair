@@ -10,6 +10,11 @@ public class Reactor : Widget
     public GameObject meter;
     public GameObject bar;
 
+    private bool _readyToPoll = true;
+    public float SecondsPerPoll = 0.5f;
+    public float PollTimeoutDeadline = 1.5f;
+    private float _untilNextPoll;
+    private float _untilPollTimeoutDeadline;
 
     private float _untilNextTemperatureIncrease;
 
@@ -39,8 +44,22 @@ public class Reactor : Widget
 
     void FixedUpdate()
     {
-        StartCoroutine(Mongo.GetHealthLost(UpdateHealth));
+        _untilPollTimeoutDeadline -= Time.deltaTime;
+        if (!_readyToPoll && _untilPollTimeoutDeadline <= 0.0f)
+        {
+            _readyToPoll = true;
+        }
+
+        // Reduce time to poll
+        _untilNextPoll -= Time.deltaTime;
+
+        if (_untilNextPoll <= 0.0f && _readyToPoll)
+        {
+            StartCoroutine(Mongo.GetHealthLost(UpdateHealth));
+            _untilNextPoll = SecondsPerPoll;
+        }
     }
+
 
     void UpdateHealth(float lost)
     {
