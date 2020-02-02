@@ -5,27 +5,22 @@ using UnityEngine;
 public class small_button : MonoBehaviour
 {
     public bool pressed = false;
-
+    public numpad numpadprnt;
+    public int keyval;
     // Start is called before the first frame update
     void Start()
     {
-        
+        numpadprnt = this.transform.parent.gameObject.GetComponent<numpad>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void OnMouseDown()
     {
-        Debug.Log("OnMouseDown");
-        this.pressed = true;
-    }
-
-    public void OnMouseUp()
-    {
-        Debug.Log("OnMouseUp");
-        this.pressed = false;
+        numpadprnt.press(keyval);
     }
 }
+
