@@ -47,11 +47,13 @@ public class radarscreen : MonoBehaviour
         if(pos.magnitude > maxRadius * 3f/4f)
         {
             _light.GetComponent<Light>().color = Color.red;
+            _light.GetComponent<Light>().range = 0.31f;
             reactor.GetComponent<Reactor>().health -= impactWeight;
         }
         else
         {
             _light.GetComponent<Light>().color = Color.green;
+            _light.GetComponent<Light>().range = 0.21f;
         }
     }
 }
