@@ -45,5 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pcId: 1
   secondsPerNewWidget: 5
-  availableWidgets:
-  - cow
+  randomChoiceWidgets:
+  - bigbutton
+  - keykiller
+  - keysmash
+  - keymash_1bar
+  - KeySwapper
+  - radarscreen
+  - turbine
+  - numpad
