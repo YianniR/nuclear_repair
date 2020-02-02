@@ -59,8 +59,8 @@ public class Reactor : Widget
                 audio2Playing = true;
                 spotlight.intensity = 1;
             }
-            
-            spotlight.transform.rotation.Set(spotlight.transform.rotation.x, spotlight.transform.rotation.y+1, spotlight.transform.rotation.z, spotlight.transform.rotation.w);
+
+            spotlight.transform.Rotate(new Vector3(0, 1, 0), 0.5f);
  
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
@@ -73,7 +73,7 @@ public class Reactor : Widget
                 source.Play();
                 audio3Playing = true;
             }
-
+            spotlight.transform.Rotate(new Vector3(0, 1, 0), 0.5f);
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
     }
