@@ -42,13 +42,25 @@ public class WorldData : MonoBehaviour {
     }
 
     // Push some data to the world.
-    public void set (JSONObject data, int dataId) {
+    public void setJson (JSONObject data, int dataId) {
         JSONObject toSubmit = new JSONObject(JSONObject.Type.OBJECT);
         toSubmit.AddField("dataId", dataId);
         toSubmit.AddField("body", data);
 
         Debug.Log("About to submit " + toSubmit.ToString());
         StartCoroutine(Mongo.CreateOrUpdateData(toSubmit.ToString(), (string res) => { return; }));
+    }
+
+    // Push some data from a serializable struct.
+    public void set<T> (T data, int dataId) {
+        if (!typeof(T).IsSerializable) {
+            Debug.Log("Data to set must be [System.Serializable]!");
+            return;
+        }
+        string dataText = JsonUtility.ToJson(data);
+        JSONObject dataBody = new JSONObject(dataText);
+
+        setJson(dataBody, dataId);
     }
 
     private void poll () {
