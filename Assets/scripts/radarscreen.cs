@@ -25,7 +25,7 @@ public class radarscreen : Widget
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float z = Input.GetAxisRaw("Horizontal");
         float x = Input.GetAxisRaw("Vertical");

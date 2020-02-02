@@ -16,7 +16,7 @@ public class fadeout : MonoBehaviour
         myCG.alpha = 1;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (flash)
         {
