@@ -198,17 +198,16 @@ public class Mongo : MonoBehaviour
 
         var dataObj = new JSONObject(data);
 
-        if (!dataObj.HasField("dataId"))
+        if (dataObj.HasField("dataId"))
         {
-            Debug.LogError("Not enough data you n00b");
+            var dataId = (int) dataObj["dataId"].n;
+
+            if (dataId != -1)
+            {
+                where += "?where={\"dataId\":" + dataId + "}";
+            }
         }
 
-        var dataId = (int) dataObj["dataId"].n;
-
-        if (dataId != -1)
-        {
-            where += "?where={\"dataId\":" + dataId + "}";
-        }
 
         yield return checkExistingAndSend(data, genUrl, where, callbackFunc);
     }

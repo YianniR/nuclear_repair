@@ -8,6 +8,7 @@ TagManager:
   - Spawner
   - Mongo
   - Director
+  - WorldData
   layers:
   - Default
   - TransparentFX

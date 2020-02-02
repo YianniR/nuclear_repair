@@ -9,18 +9,29 @@ public class clockwidget : Widget
     public int grace = 5;
     TextMesh minstxt;
     TextMesh secstxt;
+
+    /* WorldData world; */
+
     // Start is called before the first frame update
     void Start()
     {
         endtime = Time.time + numsecs + grace;
         minstxt = GameObject.Find("Text/mins").GetComponent<TextMesh>();
         secstxt = GameObject.Find("Text/secs").GetComponent<TextMesh>();
+
+/*         world = GameObject.FindWithTag("WorldData").GetComponent<WorldData>(); */
+
+/*         JSONObject toPush = new JSONObject(JSONObject.Type.OBJECT); */
+/*         toPush.AddField("hello", "world"); */
+/*         world.set(toPush, 5); */
     }
 
     // Update is called once per frame
     void Update()
     {
         float timeleft = endtime - Time.time;
+
+        /* Debug.Log(world.get(5).ToString()); */
 
         if (timeleft > numsecs)
         {
