@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -12,7 +13,7 @@ public class Mongo : MonoBehaviour
     {
         // StartCoroutine(GetRequest("widgets", printData));
         //
-        // StartCoroutine(CreateOrUpdateData("{\"dataId\":3, \"type\":\"cow\" }", printData));
+        StartCoroutine(CreateOrUpdateData("{\"dataId\":3, \"type\":\"health\" }", printData));
 
         // StartCoroutine(DeleteEverything());
 
@@ -157,9 +158,7 @@ public class Mongo : MonoBehaviour
         var genUrl = Url + "widgets";
         var where = "";
 
-        var update = false;
-        var etag = "";
-        var id = "";
+
 
         var dataObj = new JSONObject(data);
 
@@ -184,6 +183,44 @@ public class Mongo : MonoBehaviour
             where += "?where={\"pcId\":" + pcId + "}";
         }
 
+        yield return checkExistingAndSend(data, genUrl, where, callbackFunc);
+    }
+
+    public static IEnumerator CreateOrUpdateData(
+        string data
+        , Action<string> callbackFunc
+    )
+    {
+        var genUrl = Url + "data";
+        var where = "";
+
+        var update = false;
+        var etag = "";
+        var id = "";
+
+        var dataObj = new JSONObject(data);
+
+        if (!dataObj.HasField("dataId"))
+        {
+            Debug.LogError("Not enough data you n00b");
+        }
+
+        var dataId = (int) dataObj["dataId"].n;
+
+        if (dataId != -1)
+        {
+            where += "?where={\"dataId\":" + dataId + "}";
+        }
+
+        yield return checkExistingAndSend(data, genUrl, where, callbackFunc);
+    }
+
+    private static IEnumerator checkExistingAndSend(string data, string genUrl, string where, Action<string> callbackFunc)
+    {
+        var update = false;
+        var etag = "";
+        var id = "";
+
         if (where != "")
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(genUrl + where))
@@ -203,7 +240,7 @@ public class Mongo : MonoBehaviour
                     JSONObject obj = new JSONObject(webRequest.downloadHandler.text);
                     if (!obj.HasField("_error"))
                     {
-                        if (obj.HasField("_items") && obj["_items"].list.Count > 1)
+                        if (obj.HasField("_items") && obj["_items"].list.Count >= 1)
                         {
                             update = true;
                             etag = stripEnds(obj["_items"][0]["_etag"].ToString());
@@ -241,113 +278,6 @@ public class Mongo : MonoBehaviour
                 {
                     Debug.Log(genUrl + "/" + id + data + ":\n Patch Received: \n" + webRequest.downloadHandler.text);
                     Debug.Log("Etag " + etag + " ID " + id);
-                    callbackFunc(webRequest.downloadHandler.text);
-                    yield return webRequest.downloadHandler.text;
-                }
-            }
-        }
-        else
-        {
-            using (UnityWebRequest webRequest = UnityWebRequest.Put(genUrl, bytes))
-            {
-                webRequest.SetRequestHeader("X-HTTP-Method-Override", "POST");
-                webRequest.SetRequestHeader("Content-Type", "application/json");
-
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.isNetworkError)
-                {
-                    Debug.Log(genUrl + data + ": Post Error: " + webRequest.error);
-                }
-                else
-                {
-                    Debug.Log(genUrl + data + ":\n Post Received: \n" + webRequest.downloadHandler.text);
-                    callbackFunc(webRequest.downloadHandler.text);
-                    yield return webRequest.downloadHandler.text;
-                }
-            }
-        }
-    }
-
-    public static IEnumerator CreateOrUpdateData(
-        string data
-        , Action<string> callbackFunc
-    )
-    {
-        var genUrl = Url + "data";
-        var where = "";
-
-        var update = false;
-        var etag = "";
-        var id = "";
-
-        var dataObj = new JSONObject(data);
-
-        if (!dataObj.HasField("dataId"))
-        {
-            Debug.LogError("Not enough data you n00b");
-        }
-
-        var dataId = (int) dataObj["dataId"].n;
-
-        if (dataId != -1)
-        {
-            where += "?where={\"dataId\":" + dataId + "}";
-        }
-
-        if (where != "")
-        {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(genUrl + where))
-            {
-                webRequest.SetRequestHeader("Content-Type", "application/json");
-
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.isNetworkError)
-                {
-                    Debug.Log(genUrl + where + ": Get Error: " + webRequest.error);
-                }
-                else
-                {
-                    Debug.Log(genUrl + where + ":\nGet Received: \n" + webRequest.downloadHandler.text);
-                    JSONObject obj = new JSONObject(webRequest.downloadHandler.text);
-                    if (!obj.HasField("_error"))
-                    {
-                        if (obj.HasField("_items") && obj["_items"].list.Count > 1)
-                        {
-                            update = true;
-                            etag = stripEnds(obj["_items"][0]["_etag"].ToString());
-                            id = stripEnds(obj["_items"][0]["_id"].ToString());
-                        }
-                    }
-
-                    yield return webRequest.downloadHandler.text;
-                }
-            }
-        }
-
-        byte[] bytes = Encoding.UTF8.GetBytes(data);
-
-        if (update)
-        {
-            using (UnityWebRequest webRequest = UnityWebRequest.Put(genUrl + "/" + id, bytes))
-            {
-                webRequest.SetRequestHeader("X-HTTP-Method-Override", "PATCH");
-                webRequest.SetRequestHeader("Content-Type", "application/json");
-                webRequest.SetRequestHeader("If-Match", etag);
-
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.isNetworkError)
-                {
-                    Debug.Log(genUrl + "/" + id + data + ": Patch Error: " + webRequest.error);
-                }
-                else
-                {
-                    Debug.Log(genUrl + "/" + id + data + ":\n Patch Received: \n" + webRequest.downloadHandler.text);
                     callbackFunc(webRequest.downloadHandler.text);
                     yield return webRequest.downloadHandler.text;
                 }
