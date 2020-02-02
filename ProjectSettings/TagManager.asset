@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Reactor
   - Spawner
+  - Mongo
   layers:
   - Default
   - TransparentFX

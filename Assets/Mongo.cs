@@ -62,7 +62,7 @@ public class Mongo : MonoBehaviour
 
         if (pcId != -1)
         {
-            genUrl += "?where={\"pcID\":" + pcId + "}";
+            genUrl += "?where={\"pcId\":" + pcId + "}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(genUrl))
