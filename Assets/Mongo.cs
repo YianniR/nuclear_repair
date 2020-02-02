@@ -12,14 +12,21 @@ public class Mongo : MonoBehaviour
     {
         // StartCoroutine(GetRequest("widgets", printData));
         //
-        // StartCoroutine(CreateOrUpdateWidget("{\"instanceId\":3, \"pcId\":1, \"type\":\"cow\" }", printData));
+        // StartCoroutine(CreateOrUpdateData("{\"dataId\":3, \"type\":\"cow\" }", printData));
 
-        StartCoroutine(DeleteEverything());
+        // StartCoroutine(DeleteEverything());
+
+        // StartCoroutine(GetHealthLost(printData));
 
         // StartCoroutine(PatchRequest("data/5e35ba0b54988257208394c5", "{type:\"moo\"}", printData));
     }
 
     private void printData(string data)
+    {
+        Debug.Log("PRINTING: " + data);
+    }
+
+    private void printData(int data)
     {
         Debug.Log("PRINTING: " + data);
     }
@@ -408,6 +415,73 @@ public class Mongo : MonoBehaviour
             {
                 // Debug.Log(Url + "data" + ":\n Post Received: \n" + webRequest.downloadHandler.text);
                 // yield return webRequest.downloadHandler.text;
+            }
+        }
+    }
+
+    //////////////////////////////// HEALTH //////////////////////////////////////////////
+    public static IEnumerator LoseHealth(int amount = 1)
+    {
+        var genUrl = Url + "data";
+        var data = "{\"type\":\"health\", \"amount\":" + amount + "}";
+
+        byte[] bytes = Encoding.UTF8.GetBytes(data);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Put(genUrl, bytes))
+        {
+            webRequest.SetRequestHeader("X-HTTP-Method-Override", "POST");
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(genUrl + data + ": Health (POST) Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(genUrl + data + ":\n Health (POST) Received: \n" + webRequest.downloadHandler.text);
+                yield return webRequest.downloadHandler.text;
+            }
+        }
+    }
+
+    public static IEnumerator GetHealthLost(Action<int> callbackFunc)
+    {
+        var genUrl = Url + "data";
+
+        genUrl += "?where={\"type\":\"health\"}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(genUrl))
+        {
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(genUrl + ": Health (GET) Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(genUrl + ":\nHealth (GET) Received: \n" + webRequest.downloadHandler.text);
+
+                int healthLost = 0;
+
+                JSONObject jsonObject = new JSONObject(webRequest.downloadHandler.text);
+                foreach (var item in jsonObject["_items"].list)
+                {
+                    if (item.HasField("amount"))
+                    {
+                        healthLost += (int) item["amount"].n;
+                    }
+                }
+
+                callbackFunc(healthLost);
+                yield return webRequest.downloadHandler.text;
             }
         }
     }
