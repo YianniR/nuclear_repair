@@ -114,6 +114,9 @@ public class Director : MonoBehaviour {
 
         instanceCount += 1;
 
+        if (r.type == "radarscreen")
+            r.pcId = 1;
+
         StartCoroutine(Mongo.CreateOrUpdateWidget(JsonUtility.ToJson(r), (string response) => { return; }));
     }
 
@@ -124,8 +127,8 @@ public class Director : MonoBehaviour {
         if (firstWidgetsIndex < firstWidgets.Count)
             return firstWidgets[firstWidgetsIndex].pcId;
 
-        /* return Random.Range(1, 3); */
-        return 1;
+        return Random.Range(1, 3);
+        // return 1;
     }
 
     private string makeWidget () {
