@@ -20,7 +20,7 @@ public class WorldData : MonoBehaviour {
         readyToPoll = true;
     }
 
-    void Update () {
+    void FixedUpdate () {
         // If the previous poll took too long, just mark ourselves as ready
         // again.
         untilPollTimeoutDeadline -= Time.deltaTime;
@@ -48,7 +48,7 @@ public class WorldData : MonoBehaviour {
         toSubmit.AddField("body", data);
 
         Debug.Log("About to submit " + toSubmit.ToString());
-        StartCoroutine(Mongo.CreateOrUpdateData(toSubmit.str, (string res) => { return; }));
+        StartCoroutine(Mongo.CreateOrUpdateData(toSubmit.ToString(), (string res) => { return; }));
     }
 
     private void poll () {
