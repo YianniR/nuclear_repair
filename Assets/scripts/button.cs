@@ -43,7 +43,7 @@ public class button : Widget
                 isrunning = false;
             }
         }
-        else //not running
+        else if (!isRestartButton) //not running
         {
             light.enabled = true;
             WorldData.LoseHealth(impactWeight);

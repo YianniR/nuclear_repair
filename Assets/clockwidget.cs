@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class clockwidget : Widget
 {
@@ -30,6 +31,7 @@ public class clockwidget : Widget
         else if (timeleft < 0)
         {
             timeleft = 0;
+            SceneManager.LoadScene("WinnerWinnerChickenDinner", LoadSceneMode.Single);
         }
 
         int mins = ((int) timeleft) / 60;
