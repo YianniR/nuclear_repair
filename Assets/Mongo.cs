@@ -1,11 +1,6 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Serialization.Json;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,9 +10,9 @@ public class Mongo : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(GetRequest("widgets", printData));
-
-        StartCoroutine(CreateOrUpdateWidget( "{\"instanceId\":3, \"pcId\":1, \"type\":\"box\" }", printData));
+        // StartCoroutine(GetRequest("widgets", printData));
+        //
+        // StartCoroutine(CreateOrUpdateWidget("{\"instanceId\":3, \"pcId\":1, \"type\":\"box\" }", printData));
 
         // StartCoroutine(GetRequest("data/1", printData));
 
@@ -159,7 +154,7 @@ public class Mongo : MonoBehaviour
         }
 
         var instanceId = (int) dataObj["instanceId"].n;
-        var pcId = (int)dataObj["pcId"].n;
+        var pcId = (int) dataObj["pcId"].n;
 
         if (instanceId != -1 && pcId != -1)
         {
@@ -280,7 +275,7 @@ public class Mongo : MonoBehaviour
             Debug.LogError("Not enough data you n00b");
         }
 
-        var dataId = (int)dataObj["dataId"].n;
+        var dataId = (int) dataObj["dataId"].n;
 
         if (dataId != -1)
         {
