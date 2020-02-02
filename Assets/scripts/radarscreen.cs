@@ -18,11 +18,15 @@ public class radarscreen : Widget
     private float _untilNextPoll;
     private float _untilPollTimeoutDeadline;
 
+    AudioSource source;
 
     // Start is called before the first frame update
     void Start()
     {
         _light = transform.Find("screen/radarlight").gameObject;
+        source = this.transform.GetComponent<AudioSource>();
+        source.volume = 0;
+        source.Play();
         nextbreak = Time.time + Random.Range(5, 10);
     }
 
@@ -49,7 +53,9 @@ public class radarscreen : Widget
         pos = Vector3.ClampMagnitude(pos, maxRadius);
         _light.transform.localPosition = new Vector3(pos.x, _light.transform.localPosition.y, pos.z);
 
-        if(pos.magnitude > maxRadius * 3f/4f)
+        source.volume = pos.magnitude * 0.8f;
+
+        if (pos.magnitude > maxRadius * 3f/4f)
         {
             _light.GetComponent<Light>().color = Color.red;
             _light.GetComponent<Light>().range = 0.31f; 

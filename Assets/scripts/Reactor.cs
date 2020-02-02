@@ -9,6 +9,7 @@ public class Reactor : Widget
     public float maxHealth = 100f;
     public GameObject meter;
     public GameObject bar;
+    Light spotlight;
 
     public AudioClip audio1;
     public AudioClip audio2;
@@ -31,6 +32,8 @@ public class Reactor : Widget
     {
         meter = this.transform.Find("health/Meter").gameObject;
         bar = this.transform.Find("health/Meter/bar").gameObject;
+        spotlight = this.transform.Find("lights/Spot Light").GetComponent<Light>();
+        spotlight.intensity = 0;
         source = this.transform.GetComponent<AudioSource>();
         source.clip = audio1;
         source.Play();
@@ -50,7 +53,10 @@ public class Reactor : Widget
                 source.clip = audio2;
                 source.Play();
                 audio2Playing = true;
+                spotlight.intensity = 1;
             }
+            
+            spotlight.transform.rotation.Set(spotlight.transform.rotation.x, spotlight.transform.rotation.y+1, spotlight.transform.rotation.z, spotlight.transform.rotation.w);
  
             bar.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         }
